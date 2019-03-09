@@ -25,20 +25,6 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
-#define SOPT5_UART0TXSRC_UART_TX 0x00u /*!<@brief UART 0 transmit data source select: UART0_TX pin */
-
-/*! @name PORTB16 (coord E10), 0
-  @{ */
-#define BOARD_INITPINS_MCX_RX_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_INITPINS_MCX_RX_PIN 16U    /*!<@brief PORTB pin index: 16 */
-                                         /* @} */
-
-/*! @name PORTB17 (coord E9), 1
-  @{ */
-#define BOARD_INITPINS_MCX_TX_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_INITPINS_MCX_TX_PIN 17U    /*!<@brief PORTB pin index: 17 */
-                                         /* @} */
-
 /*! @name PORTC5 (coord D8), 13/LED
   @{ */
 #define BOARD_INITPINS_LED_GPIO GPIOC /*!<@brief GPIO device name: GPIOC */

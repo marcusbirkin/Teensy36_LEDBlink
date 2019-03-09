@@ -25,7 +25,7 @@ pin_labels:
 - {pin_num: C2, pin_signal: PTD14/SPI2_SIN/SDHC0_D6/FB_A22, label: '51'}
 - {pin_num: B3, pin_signal: PTD10/LPUART0_RTS_b/FB_A18, label: '56'}
 - {pin_num: C3, pin_signal: PTD13/SPI2_SOUT/SDHC0_D5/FB_A21, label: '52'}
-- {pin_num: A4, pin_signal: PTD4/LLWU_P14/SPI0_PCS1/UART0_RTS_b/FTM0_CH4/FB_AD2/SDRAM_A10/EWM_IN/SPI1_PCS0, label: '10'}
+- {pin_num: A4, pin_signal: PTD4/LLWU_P14/SPI0_PCS1/UART0_RTS_b/FTM0_CH4/FB_AD2/SDRAM_A10/EWM_IN/SPI1_PCS0, label: '6'}
 - {pin_num: B4, pin_signal: PTD3/SPI0_SIN/UART2_TX/FTM3_CH3/FB_AD3/SDRAM_A11/I2C0_SDA, label: '8'}
 - {pin_num: C4, pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART2_RX/FTM3_CH2/FB_AD4/SDRAM_A12/I2C0_SCL, label: '7'}
 - {pin_num: D4, pin_signal: ADC0_SE5b/PTD1/SPI0_SCK/UART2_CTS_b/FTM3_CH1/FB_CS0_b, label: 14/A0}
@@ -60,8 +60,8 @@ pin_labels:
 - {pin_num: A11, pin_signal: CMP1_IN1/PTC3/LLWU_P7/SPI0_PCS1/UART1_RX/FTM0_CH2/CLKOUT/I2S0_TX_BCLK, label: '9'}
 - {pin_num: J9, pin_signal: CMP2_IN1/PTA13/LLWU_P4/CAN0_RX/FTM1_CH1/RMII0_RXD0/MII0_RXD0/I2C2_SDA/I2S0_TX_FS/FTM1_QD_PHB/TPM1_CH1, label: '4'}
 - {pin_num: A5, pin_signal: PTD0/LLWU_P12/SPI0_PCS0/UART2_RTS_b/FTM3_CH0/FB_ALE/FB_CS1_b/FB_TS_b, label: '2'}
-- {pin_num: E9, pin_signal: TSI0_CH10/PTB17/SPI1_SIN/UART0_TX/FTM_CLKIN1/FB_AD16/SDRAM_D16/EWM_OUT_b/TPM_CLKIN1, label: '1', identifier: MCX_TX}
-- {pin_num: E10, pin_signal: TSI0_CH9/PTB16/SPI1_SOUT/UART0_RX/FTM_CLKIN0/FB_AD17/SDRAM_D17/EWM_IN/TPM_CLKIN0, label: '0', identifier: MCX_RX}
+- {pin_num: E9, pin_signal: TSI0_CH10/PTB17/SPI1_SIN/UART0_TX/FTM_CLKIN1/FB_AD16/SDRAM_D16/EWM_OUT_b/TPM_CLKIN1, label: '1'}
+- {pin_num: E10, pin_signal: TSI0_CH9/PTB16/SPI1_SOUT/UART0_RX/FTM_CLKIN0/FB_AD17/SDRAM_D17/EWM_IN/TPM_CLKIN0, label: '0'}
 - {pin_num: H12, pin_signal: PTA28/MII0_TXER/FB_A25, label: '40'}
 - {pin_num: H11, pin_signal: PTA29/MII0_COL/FB_A24, label: '41'}
 - {pin_num: J11, pin_signal: PTA26/MII0_TXD3/FB_A27, label: '42'}
@@ -116,8 +116,6 @@ BOARD_InitPins:
   - {pin_num: H2, peripheral: USB0, signal: DM, pin_signal: USB0_DM}
   - {pin_num: H1, peripheral: USB0, signal: DP, pin_signal: USB0_DP}
   - {pin_num: G1, peripheral: USB0, signal: VOUT33, pin_signal: VREG_OUT}
-  - {pin_num: E10, peripheral: UART0, signal: RX, pin_signal: TSI0_CH9/PTB16/SPI1_SOUT/UART0_RX/FTM_CLKIN0/FB_AD17/SDRAM_D17/EWM_IN/TPM_CLKIN0}
-  - {pin_num: E9, peripheral: UART0, signal: TX, pin_signal: TSI0_CH10/PTB17/SPI1_SIN/UART0_TX/FTM_CLKIN1/FB_AD16/SDRAM_D16/EWM_OUT_b/TPM_CLKIN1, direction: OUTPUT}
   - {pin_num: M12, peripheral: OSC, signal: EXTAL0, pin_signal: EXTAL0/PTA18/FTM0_FLT2/FTM_CLKIN0/TPM_CLKIN0}
   - {pin_num: M11, peripheral: OSC, signal: XTAL0, pin_signal: XTAL0/PTA19/FTM1_FLT0/FTM_CLKIN1/LPTMR0_ALT1/TPM_CLKIN1}
   - {pin_num: M6, peripheral: RTC, signal: EXTAL32, pin_signal: EXTAL32}
@@ -137,8 +135,6 @@ void BOARD_InitPins(void)
 {
     /* Port A Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortA);
-    /* Port B Clock Gate Control: Clock enabled */
-    CLOCK_EnableClock(kCLOCK_PortB);
     /* Port C Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortC);
 
@@ -155,21 +151,8 @@ void BOARD_InitPins(void)
     /* PORTA19 (pin M11) is configured as XTAL0 */
     PORT_SetPinMux(PORTA, 19U, kPORT_PinDisabledOrAnalog);
 
-    /* PORTB16 (pin E10) is configured as UART0_RX */
-    PORT_SetPinMux(BOARD_INITPINS_MCX_RX_PORT, BOARD_INITPINS_MCX_RX_PIN, kPORT_MuxAlt3);
-
-    /* PORTB17 (pin E9) is configured as UART0_TX */
-    PORT_SetPinMux(BOARD_INITPINS_MCX_TX_PORT, BOARD_INITPINS_MCX_TX_PIN, kPORT_MuxAlt3);
-
     /* PORTC5 (pin D8) is configured as PTC5 */
     PORT_SetPinMux(BOARD_INITPINS_LED_PORT, BOARD_INITPINS_LED_PIN, kPORT_MuxAsGpio);
-
-    SIM->SOPT5 = ((SIM->SOPT5 &
-                   /* Mask bits to zero which are setting */
-                   (~(SIM_SOPT5_UART0TXSRC_MASK)))
-
-                  /* UART 0 transmit data source select: UART0_TX pin. */
-                  | SIM_SOPT5_UART0TXSRC(SOPT5_UART0TXSRC_UART_TX));
 }
 /***********************************************************************************************************************
  * EOF
